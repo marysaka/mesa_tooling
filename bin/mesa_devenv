@@ -1,0 +1,67 @@
+#!/bin/bash
+
+export MESA_BUILD_BASE_DIR=$HOME/build/mesa
+export MESA_ROOT_DIR=$HOME/dev/mesa
+export VK_GL_CTS_ROOT_DIR=$HOME/dev/VK-GL-CTS
+export VK_GL_CTS_BUILD_DIR=$VK_GL_CTS_ROOT_DIR/build
+export VULKAN_CTS_PATH=$VK_GL_CTS_ROOT_DIR/external/vulkancts
+export OPENGL_CTS_PATH=$VK_GL_CTS_ROOT_DIR/external/openglcts
+
+if [ "$#" -ne 1 ]; then
+    echo "usage: <driver>"
+    exit 1
+fi
+
+driver=$1
+
+case $driver in
+    asahi)
+        gallium_drivers_arg="asahi"
+        vulkan_drivers_arg=""
+        tools_args="nir,asahi"
+        extra_meson_args="-Dllvm=disabled"
+        ;;
+    asahi+vk)
+        gallium_drivers_arg="asahi"
+        vulkan_drivers_arg="asahi-experimental"
+        tools_args="nir,asahi"
+        extra_meson_args="-Dllvm=disabled"
+        ;;
+    nouveau)
+        gallium_drivers_arg="nouveau"
+        vulkan_drivers_arg=""
+        tools_args="nir,nouveau"
+        extra_meson_args="-Dbuild-tests=true"
+        ;;
+    nouveau+vk)
+        gallium_drivers_arg="nouveau"
+        vulkan_drivers_arg="nouveau-experimental"
+        tools_args="nir,nouveau"
+        extra_meson_args="-Dbuild-tests=true"
+        ;;
+    *)
+        echo "Unknown driver: $driver"
+        exit 1
+        ;;
+esac
+
+export MESA_BUILD_DIR=$MESA_BUILD_BASE_DIR/$driver
+
+meson_args="-Dgallium-drivers=$gallium_drivers_arg -Dvulkan-drivers=$vulkan_drivers_arg -Dtools=$tools_args $extra_meson_args"
+
+mkdir -p $MESA_BUILD_DIR
+
+pushd $MESA_BUILD_DIR > /dev/null
+meson setup $meson_args $MESA_ROOT_DIR
+
+if [ $? -ne 0 ]; then
+    meson setup --reconfigure $meson_args $MESA_ROOT_DIR
+
+    if [ $? -ne 0 ]; then
+        exit 1
+    fi
+fi
+popd > /dev/null
+
+echo $MESA_BUILD_DIR
+meson devenv -C $MESA_BUILD_DIR
