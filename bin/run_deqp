@@ -33,12 +33,11 @@ esac
 export MESA_VK_IGNORE_CONFORMANCE_WARNING=true
 
 FRACTION=1
-JOBS=8
 
 EGL_PLATFORM=surfaceless deqp-runner run --deqp $VK_GL_CTS_BUILD_DIR/$deqp_path \
                                          --output $output \
                                           --fraction $FRACTION \
-                                         --jobs $JOBS \
+                                         --jobs $DEQP_JOBS \
                                          --renderer-check "$renderer_check" \
                                          --caselist "$caselist" \
                                          --skips "$skips" \

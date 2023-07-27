@@ -63,5 +63,7 @@ if [ $? -ne 0 ]; then
 fi
 popd > /dev/null
 
+export DEQP_JOBS=8
+
 echo $MESA_BUILD_DIR
 meson devenv -C $MESA_BUILD_DIR
