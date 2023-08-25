@@ -32,5 +32,5 @@ case $api in
         ;;
 esac
 
-export DEQP_JOBS=8
-run_deqp "$renderer_check" "$api" "$caselist" "$skips" "$output"
+export DEQP_JOBS=4
+run_deqp "$renderer_check" "$api" "$caselist" "$skips" "$output" --deqp-log-images=disable

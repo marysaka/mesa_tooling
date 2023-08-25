@@ -1,13 +1,19 @@
 #!/bin/bash
 
-if [ "$#" -ne 3 ]; then
-    echo "usage: <renderer_check> <caselist> <output>"
+if [ "$#" -le 2 ]; then
+    echo "usage: <renderer_check> <caselist> <output> [skips] [extra_argss]"
     exit 1
 fi
 
 renderer_check=$1
 caselist=$2
 output=$3
-skips=$MESA_ROOT_DIR/.gitlab-ci/all-skips.txt
+skips=$4
 
-run_deqp "$renderer_check" "vk" "$caselist" "$skips" "$output"
+if [ -z $skips ]; then
+    skips=$MESA_ROOT_DIR/.gitlab-ci/all-skips.txt
+fi
+
+extra_args=$5
+
+run_deqp "$renderer_check" "vk" "$caselist" "$skips" "$output" "$extra_args"

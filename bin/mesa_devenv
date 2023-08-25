@@ -7,12 +7,17 @@ export VK_GL_CTS_BUILD_DIR=$VK_GL_CTS_ROOT_DIR/build
 export VULKAN_CTS_PATH=$VK_GL_CTS_ROOT_DIR/external/vulkancts
 export OPENGL_CTS_PATH=$VK_GL_CTS_ROOT_DIR/external/openglcts
 
-if [ "$#" -ne 1 ]; then
-    echo "usage: <driver>"
+if [ "$#" -le 0 ]; then
+    echo "usage: <driver> [build_dir_name]"
     exit 1
 fi
 
 driver=$1
+build_dir_name=$2
+
+if [ -z "$build_dir_name" ]; then
+    build_dir_name=$driver
+fi
 
 case $driver in
     asahi)
@@ -26,6 +31,14 @@ case $driver in
         vulkan_drivers_arg="asahi-experimental"
         tools_args="nir,asahi"
         extra_meson_args="-Dllvm=disabled"
+        ;;
+    asahi+dvk)
+        export CC=clang
+        export CXX=clang++
+        gallium_drivers_arg="asahi"
+        vulkan_drivers_arg="asahi-experimental"
+        tools_args="nir,asahi"
+        extra_meson_args="-Dbuildtype=debug"
         ;;
     nouveau)
         gallium_drivers_arg="nouveau"
@@ -45,7 +58,7 @@ case $driver in
         ;;
 esac
 
-export MESA_BUILD_DIR=$MESA_BUILD_BASE_DIR/$driver
+export MESA_BUILD_DIR=$MESA_BUILD_BASE_DIR/$build_dir_name
 
 meson_args="-Dgallium-drivers=$gallium_drivers_arg -Dvulkan-drivers=$vulkan_drivers_arg -Dtools=$tools_args $extra_meson_args"
 

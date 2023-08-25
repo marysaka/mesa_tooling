@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [ "$#" -ne 5 ]; then
-    echo "usage: <renderer_check> <api> <caselist> <skips> <output>"
+if [ "$#" -le 4 ]; then
+    echo "usage: <renderer_check> <api> <caselist> <skips> <output> [extra_args]"
     exit 1
 fi
 
@@ -10,6 +10,7 @@ api=$2
 caselist=$3
 skips=$4
 output=$5
+extra_args=$6
 
 case $api in
     gles2)
@@ -36,15 +37,16 @@ FRACTION=1
 
 EGL_PLATFORM=surfaceless deqp-runner run --deqp $VK_GL_CTS_BUILD_DIR/$deqp_path \
                                          --output $output \
-                                          --fraction $FRACTION \
+                                         --fraction $FRACTION \
                                          --jobs $DEQP_JOBS \
                                          --renderer-check "$renderer_check" \
                                          --caselist "$caselist" \
                                          --skips "$skips" \
+                                         --testlog-to-xml $VK_GL_CTS_BUILD_DIR/executor/testlog-to-xml \
                                          -- \
                                          --deqp-surface-type=pbuffer \
                                          --deqp-gl-config-name=rgba8888d24s8ms0 \
                                          --deqp-surface-width=256 \
                                          --deqp-surface-height=256 \
                                          --deqp-visibility=hidden \
-                                         --deqp-log-images=disable
+                                         $extra_args
