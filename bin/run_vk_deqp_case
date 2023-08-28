@@ -1,0 +1,46 @@
+#!/bin/sh
+
+set -e
+
+if [ "$#" -le 0 ]; then
+    echo "usage: <deqp_test> [run_mode]"
+    exit 1
+fi
+
+if [ -z $MESA_ROOT_DIR ]; then
+    echo "ERROR: not running under mesa_devenv"
+    exit 1
+fi
+
+deqp_test=$1
+run_mode=$2
+
+case $run_mode in
+    "")
+        ;;
+    gdb)
+        exec_prefix="gdb -ex run --args"
+        ;;
+
+    *)
+        echo "Unknown run_mode: $run_mode"
+        exit 1
+        ;;
+esac
+
+CURRENT_DIR=$MESA_ROOT_DIR
+
+rm -rf $CURRENT_DIR/deqp_result
+mkdir $CURRENT_DIR/deqp_result
+
+
+pushd $VK_GL_CTS_BUILD_DIR/external/vulkancts/modules/vulkan/
+exec $exec_prefix ./deqp-vk \
+          --deqp-surface-type=pbuffer \
+          --deqp-gl-config-name=rgba8888d24s8ms0 \
+          --deqp-surface-width=256 \
+          --deqp-surface-height=256 \
+          --deqp-visibility=hidden \
+          --deqp-case="$deqp_test" \
+          --deqp-log-filename=$CURRENT_DIR/deqp_result/TestResults.qpa
+popd
