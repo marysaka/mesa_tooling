@@ -9,6 +9,9 @@ renderer_check=$1
 api=$2
 output=$3
 
+# Disable coredumps as it would only slow it down in case of crashes.
+ulimit -c 0
+
 case $api in
     gles2)
         caselist=$OPENGL_CTS_PATH/data/mustpass/gles/aosp_mustpass/main/gles2-master.txt
