@@ -1,0 +1,25 @@
+#!/bin/bash
+
+if [ "$#" -ne 3 ]; then
+    echo "usage: <renderer_check> <api> <output>"
+    exit 1
+fi
+
+renderer_check=$1
+api=$2
+output=$3
+
+output_tmp_dir=$output/vk_deqp_test
+output_file_path=$output/vk_deqp_$(date "+%m_%d_%g").tar.gz
+
+mkdir -p $output_tmp_dir
+run_full_deqp "$renderer_check" "$api" "$output_tmp_dir"
+
+pushd $output
+tar -czvf $output_file_path vk_deqp_test
+rm -rf vk_deqp_test
+sync
+popd
+
+echo $output_file_path
+
