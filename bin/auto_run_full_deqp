@@ -10,16 +10,23 @@ api=$2
 output=$3
 
 output_tmp_dir=$output/vk_deqp_test
-output_file_path=$output/vk_deqp_$(date "+%m_%d_%g").tar.gz
+date=$(date "+%m_%d_%g")
+output_file_path=$output/vk_deqp_$date.tar.gz
 
 mkdir -p $output_tmp_dir
 run_full_deqp "$renderer_check" "$api" "$output_tmp_dir"
 
 pushd $output
 tar -czvf $output_file_path vk_deqp_test
+cp vk_deqp_test/results.csv results_$date.csv
+cp vk_deqp_test/failures.csv failures_$date.csv
 rm -rf vk_deqp_test
 sync
+
+# TODO: Move this out of here
 rsync -avz -e 'ssh -p 4433' ./$output_file_path mary@lastorder:/volume3/media/documents/asahi/deqp_runs/
+rsync -avz -e 'ssh -p 4433' ./results_$date.csv mary@lastorder:/volume3/media/documents/asahi/deqp_runs/
+rsync -avz -e 'ssh -p 4433' ./failures_$date.csv mary@lastorder:/volume3/media/documents/asahi/deqp_runs/
 
 popd
 
