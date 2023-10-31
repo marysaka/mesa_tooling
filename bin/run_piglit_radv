@@ -1,0 +1,28 @@
+#!/bin/sh
+
+if [ "$#" -ne 2 ]; then
+    echo "usage: <output_dir> <profile>"
+    exit 1
+fi
+
+if [ -z $MESA_ROOT_DIR ]; then
+    echo "ERROR: not running under mesa_devenv"
+    exit 1
+fi
+
+output_dir=$1
+profile=$2
+
+PIGLIT_FOLDER=$HOME/dev/piglit
+PIGLIT_FAILS=$MESA_ROOT_DIR/src/gallium/drivers/zink/ci/zink-radv-navi10-fails.txt
+PIGLIT_SKIPS=$MESA_ROOT_DIR/src/gallium/drivers/zink/ci/zink-venus-radv-navi10-skips.txt
+PIGLIT_FLAKES=$MESA_ROOT_DIR/src/gallium/drivers/zink/ci/zink-radv-navi10-flakes.txt
+
+piglit-runner run \
+      --output $output_dir \
+      --piglit-folder $PIGLIT_FOLDER \
+      --profile $profile \
+      --baseline $PIGLIT_FAILS \
+      --skips $PIGLIT_SKIPS \
+      --flakes $PIGLIT_FLAKES \
+      --process-isolation
