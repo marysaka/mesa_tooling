@@ -23,15 +23,17 @@ fi
 
 case $driver in
     asahi)
+        export CC=clang
+        export CXX=clang++
         gallium_drivers_arg="asahi"
         vulkan_drivers_arg=""
-        tools_args="nir,asahi"
-        extra_meson_args="-Dllvm=disabled"
+        tools_args="nir,asahi,drm-shim"
+        extra_meson_args=""
         ;;
     asahi+vk)
         gallium_drivers_arg="asahi"
         vulkan_drivers_arg="asahi-experimental"
-        tools_args="nir,asahi"
+        tools_args="nir,asahi,drm-shim"
         extra_meson_args="-Dllvm=disabled"
         ;;
     asahi+dvk)
