@@ -1,0 +1,73 @@
+#!/bin/sh
+
+set -e
+
+if [ "$#" -le 1 ]; then
+    echo "usage: <api> <deqp_test> [run_mode]"
+    exit 1
+fi
+
+if [ -z $MESA_ROOT_DIR ]; then
+    echo "ERROR: not running under mesa_devenv"
+    exit 1
+fi
+
+
+api=$1
+deqp_test=$2
+run_mode=$3
+
+case $api in
+    gles2)
+        deqp_path=modules/gles2
+        deqp_binary=deqp-gles2
+        ;;
+    gles3)
+        deqp_path=modules/gles3
+        deqp_binary=deqp-gles3
+        ;;
+    gles31)
+        deqp_path=modules/gles31
+        deqp_binary=deqp-gles31
+        ;;
+    vk)
+        deqp_path=external/vulkancts/modules/vulkan
+        deqp_binary=deqp-vk
+        ;;
+    *)
+        echo "Unknown API: $api"
+        exit 1
+        ;;
+esac
+
+case $run_mode in
+    "")
+        ;;
+    gdb)
+        exec_prefix="gdb -ex run --args"
+        ;;
+
+    *)
+        echo "Unknown run_mode: $run_mode"
+        exit 1
+        ;;
+esac
+
+CURRENT_DIR=$MESA_ROOT_DIR
+
+rm -rf $CURRENT_DIR/deqp_result
+mkdir $CURRENT_DIR/deqp_result
+
+target_dir=$VK_GL_CTS_BUILD_DIR/$deqp_path
+
+
+pushd $target_dir
+EGL_PLATFORM=surfaceless exec $exec_prefix ./$deqp_binary \
+          --deqp-surface-type=pbuffer \
+          --deqp-gl-config-name=rgba8888d24s8ms0 \
+          --deqp-surface-width=256 \
+          --deqp-surface-height=256 \
+          --deqp-visibility=hidden \
+          --deqp-case="$deqp_test" \
+          --deqp-log-filename=$CURRENT_DIR/deqp_result/TestResults.qpa
+popd
