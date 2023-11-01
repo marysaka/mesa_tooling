@@ -24,7 +24,7 @@ rm -rf vk_deqp_test
 sync
 
 # TODO: Move this out of here
-rsync -avz -e 'ssh -p 4433' ./$output_file_path mary@lastorder:/volume3/media/documents/asahi/deqp_runs/
+rsync -avz -e 'ssh -p 4433' $output_file_path mary@lastorder:/volume3/media/documents/asahi/deqp_runs/
 rsync -avz -e 'ssh -p 4433' ./results_$date.csv mary@lastorder:/volume3/media/documents/asahi/deqp_runs/
 rsync -avz -e 'ssh -p 4433' ./failures_$date.csv mary@lastorder:/volume3/media/documents/asahi/deqp_runs/
 
