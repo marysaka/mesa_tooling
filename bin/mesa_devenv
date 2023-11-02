@@ -68,6 +68,15 @@ case $driver in
         tools_args="nir,nouveau"
         extra_meson_args="-Dbuildtype=release"
         ;;
+    nouveau+tegra)
+        export ALT_LOCAL=/opt/local/tegra
+        export PKG_CONFIG_PATH=$ALT_LOCAL/lib/pkgconfig
+
+        gallium_drivers_arg="nouveau"
+        vulkan_drivers_arg="nouveau-experimental"
+        tools_args="nir,nouveau"
+        extra_meson_args="--prefix=$ALT_LOCAL -Dbuildtype=debug -Dgles1=enabled -Dgles2=enabled -Dplatforms=x11,wayland"
+        ;;
     amd+vk)
         gallium_drivers_arg="radeonsi,zink"
         vulkan_drivers_arg="amd"
@@ -88,7 +97,6 @@ case $driver in
         vulkan_drivers_arg="amd,intel,virtio"
         tools_args="nir"
         extra_meson_args="--prefix=$ALT_LOCAL -Dbuildtype=debug -Dgles1=enabled -Dgles2=enabled -Dplatforms=x11,wayland"
-        #extra_meson_args="-Dbuildtype=debug"
         ;;
 
     virtio+vk)
