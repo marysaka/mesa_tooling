@@ -15,7 +15,7 @@ profile=$2
 
 PIGLIT_FOLDER=$HOME/dev/piglit
 PIGLIT_FAILS=$MESA_ROOT_DIR/src/gallium/drivers/zink/ci/zink-radv-navi10-fails.txt
-PIGLIT_SKIPS=$MESA_ROOT_DIR/src/gallium/drivers/zink/ci/zink-venus-radv-navi10-skips.txt
+PIGLIT_SKIPS=$MESA_ROOT_DIR/src/gallium/drivers/zink/ci/zink-radv-navi10-skips.txt
 PIGLIT_FLAKES=$MESA_ROOT_DIR/src/gallium/drivers/zink/ci/zink-radv-navi10-flakes.txt
 
 piglit-runner run \
