@@ -108,7 +108,7 @@ case $driver in
         gallium_drivers_arg=""
         vulkan_drivers_arg=""
         tools_args=""
-        extra_meson_args="-Dllvm=disabled -Dgles1=disabled -Dgles2=disabled -Dshared-glapi=disabled -Dopengl=false -Degl=disabled -Dglx=disabled -Dvulkan-layers=device-select,overlay,nv-shader-dump -Dbuildtype=debug"
+        extra_meson_args="-Dllvm=disabled -Dgles1=disabled -Dgles2=disabled -Dshared-glapi=disabled -Dopengl=false -Degl=disabled -Dglx=disabled -Dvulkan-layers=overlay,nv-shader-dump -Dbuildtype=debug"
         ;;
     *)
         echo "Unknown driver: $driver"
