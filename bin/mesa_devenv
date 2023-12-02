@@ -98,14 +98,18 @@ case $driver in
         tools_args="nir"
         extra_meson_args="--prefix=$ALT_LOCAL -Dbuildtype=debug -Dgles1=enabled -Dgles2=enabled -Dplatforms=x11,wayland"
         ;;
-
     virtio+vk)
         gallium_drivers_arg=""
         vulkan_drivers_arg="virtio"
         tools_args="nir"
         extra_meson_args="-Dbuildtype=debug -Dgles1=enabled -Dgles2=enabled -Dplatforms=x11,wayland"
         ;;
-
+    vulkan-layers)
+        gallium_drivers_arg=""
+        vulkan_drivers_arg=""
+        tools_args=""
+        extra_meson_args="-Dllvm=disabled -Dgles1=disabled -Dgles2=disabled -Dshared-glapi=disabled -Dopengl=false -Degl=disabled -Dglx=disabled -Dvulkan-layers=device-select,overlay,nv-shader-dump -Dbuildtype=debug"
+        ;;
     *)
         echo "Unknown driver: $driver"
         exit 1
