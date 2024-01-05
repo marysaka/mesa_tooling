@@ -11,7 +11,7 @@ sudo dnf install libglvnd-devel llvm clang lld gdb git -y
 
 if [ ! -d "$VK_GL_CTS_ROOT_DIR" ]; then
     echo "= Installing VK-GL-CTS"
-    #git clone https://github.com/KhronosGroup/VK-GL-CTS.git $VK_GL_CTS_ROOT_DIR
+    git clone https://github.com/KhronosGroup/VK-GL-CTS.git $VK_GL_CTS_ROOT_DIR
 
     cd $VK_GL_CTS_ROOT_DIR
     python3 external/fetch_sources.py

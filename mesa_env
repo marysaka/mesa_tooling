@@ -1,17 +1,18 @@
 #!/bin/sh
 
-if [ -z "$DEV_DIR" ]; then
-    export DEV_DIR=$HOME/dev
+if [ -z "$MESA_TOOLING_DEV_DIR" ]; then
+    export MESA_TOOLING_DEV_DIR=$HOME/dev
 fi
 
-if [ -z "$BUILD_DIR" ]; then
-    export BUILD_DIR=$HOME/build
+if [ -z "$MESA_TOOLING_BUILD_DIR" ]; then
+    export MESA_TOOLING_BUILD_DIR=$HOME/build
 fi
 
-export MESA_BUILD_BASE_DIR=$BUILD_DIR/mesa
-export MESA_ROOT_DIR=$DEV_DIR/mesa
-export VK_GL_CTS_ROOT_DIR=$DEV_DIR/VK-GL-CTS
+export MESA_BUILD_BASE_DIR=$MESA_TOOLING_BUILD_DIR/mesa
+export VK_GL_CTS_BUILD_DIR=$MESA_TOOLING_BUILD_DIR/VK-GL-CTS
 
-export VK_GL_CTS_BUILD_DIR=$VK_GL_CTS_ROOT_DIR/build
+export MESA_ROOT_DIR=$MESA_TOOLING_DEV_DIR/mesa
+export VK_GL_CTS_ROOT_DIR=$MESA_TOOLING_DEV_DIR/VK-GL-CTS
+
 export VULKAN_CTS_PATH=$VK_GL_CTS_ROOT_DIR/external/vulkancts
 export OPENGL_CTS_PATH=$VK_GL_CTS_ROOT_DIR/external/openglcts
