@@ -73,6 +73,12 @@ case $driver in
         tools_args="nir,nouveau"
         extra_meson_args="--prefix=$ALT_LOCAL -Dbuildtype=debug -Dgles1=enabled -Dgles2=enabled -Dplatforms=x11,wayland"
         ;;
+    panfrost+vk)
+        gallium_drivers_arg="panfrost,zink"
+        vulkan_drivers_arg="panfrost"
+        tools_args="nir,panfrost"
+        extra_meson_args="-Dbuildtype=debug"
+        ;;
     amd+vk)
         export CC=clang
         export CXX=clang++
@@ -96,14 +102,12 @@ case $driver in
         tools_args="nir"
         extra_meson_args="--prefix=$ALT_LOCAL -Dbuildtype=debug -Dgles1=enabled -Dgles2=enabled -Dplatforms=x11,wayland"
         ;;
-
     zink)
         gallium_drivers_arg="zink"
         vulkan_drivers_arg=""
         tools_args="nir"
         extra_meson_args="-Dbuildtype=debug -Dgles1=enabled -Dgles2=enabled -Dplatforms=x11,wayland"
         ;;
-
     virtio+vk)
         gallium_drivers_arg=""
         vulkan_drivers_arg="virtio"
