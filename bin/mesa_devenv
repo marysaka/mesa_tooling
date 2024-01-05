@@ -24,7 +24,7 @@ case $driver in
         gallium_drivers_arg="asahi"
         vulkan_drivers_arg=""
         tools_args="nir,asahi,drm-shim"
-        extra_meson_args=""
+        extra_meson_args="-Dbuildtype=debug"
         ;;
     asahi+vk)
         gallium_drivers_arg="asahi"
