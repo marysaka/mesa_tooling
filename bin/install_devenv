@@ -1,0 +1,35 @@
+#!/bin/bash
+
+set -e
+
+source $MESA_TOOLING_PATH/mesa_env
+
+echo "= Install dependencies"
+sudo dnf groupinstall "C Development Tools and Libraries" -y
+sudo dnf builddep mesa -y
+sudo dnf install libglvnd-devel llvm clang lld gdb git -y
+
+if [ ! -d "$VK_GL_CTS_ROOT_DIR" ]; then
+    echo "= Installing VK-GL-CTS"
+    #git clone https://github.com/KhronosGroup/VK-GL-CTS.git $VK_GL_CTS_ROOT_DIR
+
+    cd $VK_GL_CTS_ROOT_DIR
+    python3 external/fetch_sources.py
+
+    mkdir -p $VK_GL_CTS_BUILD_DIR
+    cd $VK_GL_CTS_BUILD_DIR
+    cmake $VK_GL_CTS_ROOT_DIR -DDEQP_TARGET=surfaceless -G Ninja
+    ninja
+fi
+
+if [ ! -d "$MESA_ROOT_DIR" ]; then
+    echo "= Cloning mesa"
+    git clone https://gitlab.freedesktop.org/mesa/mesa.git $MESA_ROOT_DIR
+    cd $MESA_ROOT_DIR
+    git remote rename origin upstream
+    git remote add origin git@gitlab.freedesktop.org:marysaka/mesa.git
+    git remote add panfrost https://gitlab.freedesktop.org/panfrost/mesa.git
+    git remote add asahi https://gitlab.freedesktop.org/asahi/mesa.git
+    git remote add gfxstrand https://gitlab.freedesktop.org/gfxstrand/mesa.git
+    git fetch --all
+fi

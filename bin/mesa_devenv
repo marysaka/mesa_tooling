@@ -1,11 +1,7 @@
 #!/bin/bash
 
-export MESA_BUILD_BASE_DIR=$HOME/build/mesa
-export MESA_ROOT_DIR=$HOME/dev/mesa
-export VK_GL_CTS_ROOT_DIR=$HOME/dev/VK-GL-CTS
-export VK_GL_CTS_BUILD_DIR=$VK_GL_CTS_ROOT_DIR/build
-export VULKAN_CTS_PATH=$VK_GL_CTS_ROOT_DIR/external/vulkancts
-export OPENGL_CTS_PATH=$VK_GL_CTS_ROOT_DIR/external/openglcts
+source $MESA_TOOLING_PATH/mesa_env
+
 export MESA_VK_IGNORE_CONFORMANCE_WARNING=true
 export MESA_SHADER_CACHE_DISABLE=true
 

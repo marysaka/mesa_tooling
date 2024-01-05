@@ -1,5 +1,7 @@
 #!/bin/sh
 
+source $MESA_TOOLING_PATH/mesa_env
+
 if [ "$#" -ne 2 ]; then
     echo "usage: <output_dir> <profile>"
     exit 1
