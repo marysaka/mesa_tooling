@@ -78,10 +78,12 @@ case $driver in
         extra_meson_args="--prefix=$ALT_LOCAL -Dbuildtype=debug -Dgles1=enabled -Dgles2=enabled -Dplatforms=x11,wayland"
         ;;
     amd+vk)
+        export CC=clang
+        export CXX=clang++
         gallium_drivers_arg="radeonsi,zink"
         vulkan_drivers_arg="amd"
         tools_args="nir"
-        extra_meson_args="-Dbuildtype=debug"
+        extra_meson_args="-Dllvm=disabled -Dbuildtype=debug"
         ;;
     intel+vk)
         gallium_drivers_arg="i915,zink"
@@ -98,6 +100,14 @@ case $driver in
         tools_args="nir"
         extra_meson_args="--prefix=$ALT_LOCAL -Dbuildtype=debug -Dgles1=enabled -Dgles2=enabled -Dplatforms=x11,wayland"
         ;;
+
+    zink)
+        gallium_drivers_arg="zink"
+        vulkan_drivers_arg=""
+        tools_args="nir"
+        extra_meson_args="-Dbuildtype=debug -Dgles1=enabled -Dgles2=enabled -Dplatforms=x11,wayland"
+        ;;
+
     virtio+vk)
         gallium_drivers_arg=""
         vulkan_drivers_arg="virtio"
