@@ -74,6 +74,8 @@ case $driver in
         extra_meson_args="--prefix=$ALT_LOCAL -Dbuildtype=debug -Dgles1=enabled -Dgles2=enabled -Dplatforms=x11,wayland"
         ;;
     panfrost+vk)
+        export PAN_I_WANT_A_BROKEN_VULKAN_DRIVER=1
+
         gallium_drivers_arg="panfrost,zink"
         vulkan_drivers_arg="panfrost"
         tools_args="nir,panfrost"
