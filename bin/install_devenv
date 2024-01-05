@@ -33,3 +33,5 @@ if [ ! -d "$MESA_ROOT_DIR" ]; then
     git remote add gfxstrand https://gitlab.freedesktop.org/gfxstrand/mesa.git
     git fetch --all
 fi
+
+cargo install deqp-runner

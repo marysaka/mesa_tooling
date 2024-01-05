@@ -26,7 +26,7 @@ case $api in
         skips=$MESA_ROOT_DIR/.gitlab-ci/all-skips.txt
         ;;
     vk)
-        caselist=$VK_GL_CTS_ROOT_DIR/android/cts/main/vk-master.txt
+        caselist=$VULKAN_CTS_PATH/mustpass/main/vk-default.txt
         skips=$MESA_ROOT_DIR/.gitlab-ci/all-skips.txt
         ;;
     *)
