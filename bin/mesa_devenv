@@ -37,13 +37,13 @@ case $driver in
         export CXX=clang++
         gallium_drivers_arg="asahi"
         vulkan_drivers_arg="asahi-experimental"
-        tools_args="nir,asahi"
+        tools_args="nir,asahi,drm-shim"
         extra_meson_args="-Dbuildtype=debug"
         ;;
     nouveau)
         gallium_drivers_arg="nouveau"
         vulkan_drivers_arg=""
-        tools_args="nir,nouveau"
+        tools_args="nir,nouveau,drm-shim"
         extra_meson_args="-Dbuild-tests=true"
         ;;
     nouveau+vk)
@@ -53,7 +53,7 @@ case $driver in
 
         gallium_drivers_arg="nouveau"
         vulkan_drivers_arg="nouveau-experimental"
-        tools_args="nir,nouveau"
+        tools_args="nir,nouveau,drm-shim"
         extra_meson_args="-Dbuildtype=debug"
         ;;
     nouveau+vk+release)
@@ -61,7 +61,7 @@ case $driver in
 
         gallium_drivers_arg="nouveau"
         vulkan_drivers_arg="nouveau-experimental"
-        tools_args="nir,nouveau"
+        tools_args="nir,nouveau,drm-shim"
         extra_meson_args="-Dbuildtype=release"
         ;;
     nouveau+tegra)
@@ -70,7 +70,7 @@ case $driver in
 
         gallium_drivers_arg="nouveau"
         vulkan_drivers_arg="nouveau-experimental"
-        tools_args="nir,nouveau"
+        tools_args="nir,nouveau,drm-shim"
         extra_meson_args="--prefix=$ALT_LOCAL -Dbuildtype=debug -Dgles1=enabled -Dgles2=enabled -Dplatforms=x11,wayland"
         ;;
     panfrost+vk)
@@ -78,7 +78,7 @@ case $driver in
 
         gallium_drivers_arg="panfrost,zink"
         vulkan_drivers_arg="panfrost"
-        tools_args="nir,panfrost"
+        tools_args="nir,panfrost,drm-shim"
         extra_meson_args="-Dbuildtype=debug"
         ;;
     amd+vk)
@@ -86,13 +86,13 @@ case $driver in
         export CXX=clang++
         gallium_drivers_arg="radeonsi,zink"
         vulkan_drivers_arg="amd"
-        tools_args="nir"
+        tools_args="nir,drm-shim"
         extra_meson_args="-Dllvm=disabled -Dbuildtype=debug"
         ;;
     intel+vk)
         gallium_drivers_arg="i915,zink"
         vulkan_drivers_arg="intel"
-        tools_args="nir"
+        tools_args="nir,drm-shim"
         extra_meson_args="-Dbuildtype=debug"
         ;;
     virgl)
