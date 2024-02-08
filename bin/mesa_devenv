@@ -87,7 +87,7 @@ case $driver in
         gallium_drivers_arg="radeonsi,zink"
         vulkan_drivers_arg="amd"
         tools_args="nir,drm-shim"
-        extra_meson_args="-Dllvm=disabled -Dbuildtype=debug"
+        extra_meson_args="-Dbuildtype=debug"
         ;;
     intel+vk)
         gallium_drivers_arg="i915,zink"
