@@ -79,7 +79,7 @@ case $driver in
         gallium_drivers_arg="panfrost,zink"
         vulkan_drivers_arg="panfrost"
         tools_args="nir,panfrost,drm-shim"
-        extra_meson_args="-Dbuildtype=debug"
+        extra_meson_args="-Dbuild-tests=true -Dbuildtype=debug"
         ;;
     amd+vk)
         export CC=clang
