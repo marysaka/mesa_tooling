@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+if [ "$#" -le 0 ]; then
+    echo "usage: <glsl_path>"
+    exit 1
+fi
+
+glsl_path=$1
+
+glslangValidator -g0 --target-env vulkan1.3 $glsl_path -o /tmp/output.spv && spirv2nir /tmp/output.spv
