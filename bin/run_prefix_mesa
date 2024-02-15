@@ -1,0 +1,6 @@
+#!/bin/sh
+LD_LIBRARY_PATH=$ALT_LOCAL/lib64:$ALT_LOCAL/lib:$LD_LIBRARY_PATH \
+LIBGL_DRIVERS_PATH=$ALT_LOCAL/lib64/dri:$ALT_LOCAL/lib/dri \
+VDPAU_DRIVER_PATH=$ALT_LOCAL/lib64/vdpau \
+D3D_MODULE_PATH=$ALT_LOCAL/lib64/d3d/d3dadapter9.so.1:$ALT_LOCAL/lib/d3d/d3dadapter9.so.1 \
+    exec "$@"

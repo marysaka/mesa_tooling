@@ -19,12 +19,12 @@ fi
 
 case $driver in
     asahi)
-        export CC=clang
-        export CXX=clang++
+        export ALT_LOCAL=/opt/local/asahi
+        export PKG_CONFIG_PATH=$ALT_LOCAL/lib/pkgconfig
         gallium_drivers_arg="asahi"
         vulkan_drivers_arg=""
         tools_args="nir,asahi,drm-shim"
-        extra_meson_args="-Dbuildtype=debug"
+        extra_meson_args="--prefix=$ALT_LOCAL -Dbuildtype=debug -Dglx=dri -Dglvnd=true"
         ;;
     asahi+vk)
         gallium_drivers_arg="asahi"
