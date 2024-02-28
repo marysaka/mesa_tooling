@@ -10,15 +10,19 @@ sudo dnf builddep mesa -y
 sudo dnf install libglvnd-devel llvm clang lld gdb git cmake -y
 
 if [ ! -d "$VK_GL_CTS_ROOT_DIR" ]; then
-    echo "= Installing VK-GL-CTS"
+    echo "= Cloning VK-GL-CTS"
     git clone https://github.com/KhronosGroup/VK-GL-CTS.git $VK_GL_CTS_ROOT_DIR
 
     cd $VK_GL_CTS_ROOT_DIR
     python3 external/fetch_sources.py
+fi
 
+
+if [ ! -d "$VK_GL_CTS_BUILD_DIR" ]; then
+    echo "= Building VK-GL-CTS"
     mkdir -p $VK_GL_CTS_BUILD_DIR
     cd $VK_GL_CTS_BUILD_DIR
-    cmake $VK_GL_CTS_ROOT_DIR -DDEQP_TARGET=surfaceless -G Ninja
+    cmake $VK_GL_CTS_ROOT_DIR -DDEQP_TARGET=surfaceless -DCMAKE_BUILD_TYPE=Release -G Ninja
     ninja
 fi
 
