@@ -52,7 +52,7 @@ case $driver in
         export NAK_DEBUG=print
 
         gallium_drivers_arg="nouveau"
-        vulkan_drivers_arg="nouveau-experimental"
+        vulkan_drivers_arg="nouveau"
         tools_args="nir,nouveau,drm-shim"
         extra_meson_args="-Dbuildtype=debug"
         ;;
@@ -60,7 +60,7 @@ case $driver in
         export NVK_I_WANT_A_BROKEN_VULKAN_DRIVER=1
 
         gallium_drivers_arg="nouveau"
-        vulkan_drivers_arg="nouveau-experimental"
+        vulkan_drivers_arg="nouveau"
         tools_args="nir,nouveau,drm-shim"
         extra_meson_args="-Dbuildtype=release"
         ;;
@@ -127,6 +127,14 @@ case $driver in
         vulkan_drivers_arg=""
         tools_args=""
         extra_meson_args="-Dllvm=disabled -Dgles1=disabled -Dgles2=disabled -Dshared-glapi=disabled -Dopengl=false -Degl=disabled -Dglx=disabled -Dvulkan-layers=overlay,nv-shader-dump -Dbuildtype=debug"
+        ;;
+    vk+all)
+        export NVK_I_WANT_A_BROKEN_VULKAN_DRIVER=1
+
+        gallium_drivers_arg="all"
+        vulkan_drivers_arg="all"
+        tools_args="nir"
+        extra_meson_args="-Dbuildtype=debug"
         ;;
     *)
         echo "Unknown driver: $driver"
