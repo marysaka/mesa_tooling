@@ -7,6 +7,8 @@ if [ "$#" -le 1 ]; then
     exit 1
 fi
 
+source $MESA_TOOLING_PATH/mesa_env
+
 if [ -z $MESA_ROOT_DIR ]; then
     echo "ERROR: not running under mesa_devenv"
     exit 1
