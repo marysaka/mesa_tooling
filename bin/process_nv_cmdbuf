@@ -15,6 +15,6 @@ find $dump_dir/raw -name "pushbuf_*.bin" -exec bash -c 'nv_push_dump "$1" "$gen_
 mkdir -p $dump_dir/pushbuf
 find $dump_dir/raw -name '*.txt' -exec mv {} $dump_dir/pushbuf \;
 
-find $dump_dir/raw -name "mme_*.bin" -exec bash -c 'nv_mme_dump_fermi "$1" "$gen_mme" > "$1.txt"' find-sh {} \; 
+find $dump_dir/raw -name "mme_*.bin" -exec bash -c 'nv_mme_dump "$1" "$gen_mme" > "$1.txt"' find-sh {} \;
 mkdir -p $dump_dir/mme
 find $dump_dir/raw -name '*.txt' -exec mv {} $dump_dir/mme \;
