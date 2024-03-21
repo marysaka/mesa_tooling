@@ -57,8 +57,8 @@ esac
 
 CURRENT_DIR=$MESA_ROOT_DIR
 
-rm -rf $CURRENT_DIR/deqp_result
-mkdir $CURRENT_DIR/deqp_result
+rm -rf $CURRENT_DIR/deqp_result/TestResults.qpa
+mkdir -p $CURRENT_DIR/deqp_result
 
 target_dir=$VK_GL_CTS_BUILD_DIR/$deqp_path
 

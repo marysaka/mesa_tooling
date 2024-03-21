@@ -54,15 +54,17 @@ case $driver in
         gallium_drivers_arg="nouveau"
         vulkan_drivers_arg="nouveau"
         tools_args="nir,nouveau,drm-shim"
-        extra_meson_args="-Dbuildtype=debug"
+        extra_meson_args="-Dbuildtype=debug -Dbuild-tests=true"
         ;;
     nouveau+vk+release)
         export NVK_I_WANT_A_BROKEN_VULKAN_DRIVER=1
+        export ALT_LOCAL=/opt/local/nvk
+        export PKG_CONFIG_PATH=$ALT_LOCAL/lib/pkgconfig
 
-        gallium_drivers_arg="nouveau"
+        gallium_drivers_arg="nouveau,zink"
         vulkan_drivers_arg="nouveau"
         tools_args="nir,nouveau,drm-shim"
-        extra_meson_args="-Dbuildtype=release"
+        extra_meson_args="--prefix=$ALT_LOCAL -Dbuildtype=release"
         ;;
     nouveau+tegra)
         export ALT_LOCAL=/opt/local/tegra
