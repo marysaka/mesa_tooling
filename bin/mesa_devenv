@@ -64,7 +64,7 @@ case $driver in
         gallium_drivers_arg="nouveau,zink"
         vulkan_drivers_arg="nouveau"
         tools_args="nir,nouveau,drm-shim"
-        extra_meson_args="--prefix=$ALT_LOCAL -Dbuildtype=release"
+        extra_meson_args="--prefix=$ALT_LOCAL -Dbuildtype=release -Dglx=dri -Dglvnd=true"
         ;;
     nouveau+tegra)
         export ALT_LOCAL=/opt/local/tegra
