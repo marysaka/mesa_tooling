@@ -60,7 +60,7 @@ case $driver in
         export NV50_PROG_DEBUG=1
         export NAK_DEBUG=print
 
-        gallium_drivers_arg="nouveau"
+        gallium_drivers_arg="nouveau,zink"
         vulkan_drivers_arg="nouveau"
         tools_args="nir,nouveau,drm-shim"
         extra_meson_args="-Dbuildtype=debug -Dbuild-tests=true"
