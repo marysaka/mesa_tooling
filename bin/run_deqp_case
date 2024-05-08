@@ -19,6 +19,10 @@ api=$1
 deqp_test=$2
 run_mode=$3
 
+export EGL_PLATFORM=surfaceless
+
+deqp_surface_type=pbuffer
+
 case $api in
     gles2)
         deqp_path=modules/gles2
@@ -31,6 +35,13 @@ case $api in
     gles31)
         deqp_path=modules/gles31
         deqp_binary=deqp-gles31
+        ;;
+    gl)
+        deqp_path=external/openglcts/modules
+        deqp_binary=glcts
+        deqp_surface_type=window
+
+        unset EGL_PLATFORM
         ;;
     vk)
         deqp_path=external/vulkancts/modules/vulkan
@@ -64,8 +75,8 @@ target_dir=$VK_GL_CTS_BUILD_DIR/$deqp_path
 
 
 pushd $target_dir
-EGL_PLATFORM=surfaceless exec $exec_prefix ./$deqp_binary \
-          --deqp-surface-type=pbuffer \
+exec $exec_prefix ./$deqp_binary \
+          --deqp-surface-type=$deqp_surface_type \
           --deqp-gl-config-name=rgba8888d24s8ms0 \
           --deqp-surface-width=256 \
           --deqp-surface-height=256 \
