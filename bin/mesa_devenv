@@ -24,7 +24,7 @@ case $driver in
         gallium_drivers_arg="asahi"
         vulkan_drivers_arg=""
         tools_args="nir,asahi,drm-shim"
-        extra_meson_args="--prefix=$ALT_LOCAL -Dbuildtype=debug -Dglx=dri -Dglvnd=true"
+        extra_meson_args="--prefix=$ALT_LOCAL -Dbuild-tests=true -Dbuildtype=debug -Dglx=dri -Dglvnd=true"
         ;;
     asahi+release)
         export ALT_LOCAL=/opt/local/asahi
