@@ -24,7 +24,7 @@ case $driver in
         gallium_drivers_arg="asahi"
         vulkan_drivers_arg=""
         tools_args="nir,asahi,drm-shim"
-        extra_meson_args="--prefix=$ALT_LOCAL -Dbuild-tests=true -Dbuildtype=debug -Dglx=dri -Dglvnd=true"
+        extra_meson_args="--prefix=$ALT_LOCAL -Dbuild-tests=true -Dbuildtype=debug -Dglx=dri -Dglvnd=enabled"
         ;;
     asahi+release)
         export ALT_LOCAL=/opt/local/asahi
@@ -32,7 +32,7 @@ case $driver in
         gallium_drivers_arg="asahi"
         vulkan_drivers_arg=""
         tools_args="nir,asahi,drm-shim"
-        extra_meson_args="--prefix=$ALT_LOCAL -Dglx=dri -Dglvnd=true"
+        extra_meson_args="--prefix=$ALT_LOCAL -Dglx=dri -Dglvnd=enabled"
         ;;
 
     asahi+vk)
@@ -73,7 +73,7 @@ case $driver in
         gallium_drivers_arg="nouveau,zink"
         vulkan_drivers_arg="nouveau"
         tools_args="nir,nouveau,drm-shim"
-        extra_meson_args="--prefix=$ALT_LOCAL -Dbuildtype=release -Dglx=dri -Dglvnd=true"
+        extra_meson_args="--prefix=$ALT_LOCAL -Dbuildtype=release -Dglx=dri -Dglvnd=enabled"
         ;;
     nouveau+tegra)
         export ALT_LOCAL=/opt/local/tegra
@@ -90,6 +90,14 @@ case $driver in
         tools_args="nir,panfrost,drm-shim"
         extra_meson_args="-Dbuild-tests=true -Dbuildtype=debug"
         ;;
+    panfrost+release)
+        export ALT_LOCAL=/opt/local/panfrost
+        export PKG_CONFIG_PATH=$ALT_LOCAL/lib/pkgconfig
+        gallium_drivers_arg="panfrost"
+        vulkan_drivers_arg=""
+        tools_args="nir,panfrost,drm-shim"
+        extra_meson_args="--prefix=$ALT_LOCAL -Dglx=dri -Dglvnd=enabled"
+        ;;
     panfrost+vk)
         export PAN_I_WANT_A_BROKEN_VULKAN_DRIVER=1
 
@@ -97,6 +105,16 @@ case $driver in
         vulkan_drivers_arg="panfrost"
         tools_args="nir,panfrost,drm-shim"
         extra_meson_args="-Dbuild-tests=true -Dbuildtype=debug"
+        ;;
+    panfrost+vk+release)
+        export PAN_I_WANT_A_BROKEN_VULKAN_DRIVER=1
+        export ALT_LOCAL=/opt/local/panvk
+        export PKG_CONFIG_PATH=$ALT_LOCAL/lib/pkgconfig
+
+        gallium_drivers_arg="panfrost,zink"
+        vulkan_drivers_arg="panfrost"
+        tools_args="nir,panfrost,drm-shim"
+        extra_meson_args="--prefix=$ALT_LOCAL -Dbuildtype=release -Dglx=dri -Dglvnd=enabled"
         ;;
     amd+vk)
         export CC=clang
