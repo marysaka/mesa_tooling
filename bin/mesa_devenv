@@ -107,6 +107,27 @@ case $driver in
         tools_args="nir,panfrost,drm-shim"
         extra_meson_args="--prefix=$ALT_LOCAL -Dglx=dri -Dglvnd=enabled"
         ;;
+    freedreno)
+        gallium_drivers_arg="freedreno,zink"
+        vulkan_drivers_arg=""
+        tools_args="nir,freedreno,drm-shim"
+        extra_meson_args=""
+        ;;
+    freedreno+vk)
+        gallium_drivers_arg="freedreno,zink"
+        vulkan_drivers_arg="freedreno"
+        tools_args="nir,freedreno,drm-shim"
+        extra_meson_args=""
+        ;;
+    freedreno+vk+release)
+        export ALT_LOCAL=/opt/local/freedreno
+        export PKG_CONFIG_PATH=$ALT_LOCAL/lib/pkgconfig
+
+        gallium_drivers_arg="freedreno,zink"
+        vulkan_drivers_arg="freedreno"
+        tools_args="nir,freedreno,drm-shim"
+        extra_meson_args=""
+        ;;
     amd+vk)
         export CC=clang
         export CXX=clang++
