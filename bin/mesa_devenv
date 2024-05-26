@@ -19,20 +19,16 @@ fi
 
 case $driver in
     asahi)
-        export ALT_LOCAL=/opt/local/asahi
-        export PKG_CONFIG_PATH=$ALT_LOCAL/lib/pkgconfig
         gallium_drivers_arg="asahi"
         vulkan_drivers_arg=""
         tools_args="nir,asahi,drm-shim"
-        extra_meson_args="--prefix=$ALT_LOCAL -Dglx=dri -Dglvnd=enabled"
+        extra_meson_args="-Dglx=dri -Dglvnd=enabled"
         ;;
     asahi+release)
-        export ALT_LOCAL=/opt/local/asahi
-        export PKG_CONFIG_PATH=$ALT_LOCAL/lib/pkgconfig
         gallium_drivers_arg="asahi"
         vulkan_drivers_arg=""
         tools_args="nir,asahi,drm-shim"
-        extra_meson_args="--prefix=$ALT_LOCAL -Dglx=dri -Dglvnd=enabled"
+        extra_meson_args="-Dglx=dri -Dglvnd=enabled"
         ;;
 
     asahi+vk)
@@ -67,13 +63,11 @@ case $driver in
         ;;
     nouveau+vk+release)
         export NVK_I_WANT_A_BROKEN_VULKAN_DRIVER=1
-        export ALT_LOCAL=/opt/local/nvk
-        export PKG_CONFIG_PATH=$ALT_LOCAL/lib/pkgconfig
 
         gallium_drivers_arg="nouveau,zink"
         vulkan_drivers_arg="nouveau"
         tools_args="nir,nouveau,drm-shim"
-        extra_meson_args="--prefix=$ALT_LOCAL -Dglx=dri -Dglvnd=enabled"
+        extra_meson_args="-Dglx=dri -Dglvnd=enabled"
         ;;
     panfrost)
         gallium_drivers_arg="panfrost"
@@ -82,12 +76,10 @@ case $driver in
         extra_meson_args=""
         ;;
     panfrost+release)
-        export ALT_LOCAL=/opt/local/panfrost
-        export PKG_CONFIG_PATH=$ALT_LOCAL/lib/pkgconfig
         gallium_drivers_arg="panfrost"
         vulkan_drivers_arg=""
         tools_args="nir,panfrost,drm-shim"
-        extra_meson_args="--prefix=$ALT_LOCAL -Dglx=dri -Dglvnd=enabled"
+        extra_meson_args="-Dglx=dri -Dglvnd=enabled"
         ;;
     panfrost+vk)
         export PAN_I_WANT_A_BROKEN_VULKAN_DRIVER=1
@@ -99,13 +91,11 @@ case $driver in
         ;;
     panfrost+vk+release)
         export PAN_I_WANT_A_BROKEN_VULKAN_DRIVER=1
-        export ALT_LOCAL=/opt/local/panvk
-        export PKG_CONFIG_PATH=$ALT_LOCAL/lib/pkgconfig
 
         gallium_drivers_arg="panfrost,zink"
         vulkan_drivers_arg="panfrost"
         tools_args="nir,panfrost,drm-shim"
-        extra_meson_args="--prefix=$ALT_LOCAL -Dglx=dri -Dglvnd=enabled"
+        extra_meson_args="-Dglx=dri -Dglvnd=enabled"
         ;;
     freedreno)
         gallium_drivers_arg="freedreno,zink"
@@ -143,13 +133,10 @@ case $driver in
         extra_meson_args=""
         ;;
     virgl)
-        export ALT_LOCAL=/opt/local/virgl
-        export PKG_CONFIG_PATH=$ALT_LOCAL/lib/pkgconfig
-
         gallium_drivers_arg="radeonsi,i915,iris,swrast,virgl,zink"
         vulkan_drivers_arg="amd,intel,virtio,swrast"
         tools_args="nir"
-        extra_meson_args="--prefix=$ALT_LOCAL -Dgles1=enabled -Dgles2=enabled -Dplatforms=x11,wayland"
+        extra_meson_args="-Dgles1=enabled -Dgles2=enabled -Dplatforms=x11,wayland"
         ;;
     zink)
         gallium_drivers_arg="zink"
@@ -189,6 +176,38 @@ if [[ $driver == *"release"* ]]; then
     extra_meson_args="${extra_meson_args} -Dbuildtype=release"
 else
     extra_meson_args="${extra_meson_args} -Dbuildtype=debug -Dbuild-tests=true"
+fi
+
+if [[ $driver == *"all"* ]]; then
+    driver_basename="mesa"
+elif [[ $driver == *"asahi"* ]]; then
+    driver_basename="asahi"
+elif [[ $driver == *"amd"* ]]; then
+    driver_basename="amd"
+elif [[ $driver == *"freedreno"* ]]; then
+    driver_basename="freedreno"
+elif [[ $driver == *"intel"* ]]; then
+    driver_basename="intel"
+elif [[ $driver == *"nouveau"* ]]; then
+    driver_basename="nouveau"
+elif [[ $driver == *"panfrost"* ]]; then
+    driver_basename="panfrost"
+elif [[ $driver == *"virgl"* ]]; then
+    driver_basename="virgl"
+elif [[ $driver == *"virtio"* ]]; then
+    driver_basename="virtio"
+elif [[ $driver == *"vulkan-layers"* ]]; then
+    driver_basename="vulkan-layers"
+elif [[ $driver == *"zink"* ]]; then
+    driver_basename="zink"
+fi
+
+if [[ -z $driver_basename ]]; then
+    echo "WARN: Unknown basename for prefix for $driver, no prefix specified!"
+else
+    export ALT_LOCAL=/opt/local/$driver_basename
+    export PKG_CONFIG_PATH=$ALT_LOCAL/lib/pkgconfig
+    extra_meson_args="${extra_meson_args} --prefix=$ALT_LOCAL"
 fi
 
 export MESA_BUILD_DIR=$MESA_BUILD_BASE_DIR/$build_dir_name
