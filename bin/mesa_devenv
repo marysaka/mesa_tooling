@@ -149,7 +149,9 @@ case $driver in
         extra_meson_args="-Dllvm=disabled -Dgles1=disabled -Dgles2=disabled -Dshared-glapi=disabled -Dopengl=false -Degl=disabled -Dglx=disabled -Dvulkan-layers=overlay,nv-shader-dump -Dbuildtype=debug"
         ;;
     vk+all)
+        export PVR_I_WANT_A_BROKEN_VULKAN_DRIVER=1
         export NVK_I_WANT_A_BROKEN_VULKAN_DRIVER=1
+        export PAN_I_WANT_A_BROKEN_VULKAN_DRIVER=1
 
         gallium_drivers_arg="all"
         vulkan_drivers_arg="all"
