@@ -75,15 +75,6 @@ case $driver in
         tools_args="nir,nouveau,drm-shim"
         extra_meson_args="--prefix=$ALT_LOCAL -Dbuildtype=release -Dglx=dri -Dglvnd=enabled"
         ;;
-    nouveau+tegra)
-        export ALT_LOCAL=/opt/local/tegra
-        export PKG_CONFIG_PATH=$ALT_LOCAL/lib/pkgconfig
-
-        gallium_drivers_arg="nouveau"
-        vulkan_drivers_arg="nouveau-experimental"
-        tools_args="nir,nouveau,drm-shim"
-        extra_meson_args="--prefix=$ALT_LOCAL -Dbuildtype=debug -Dgles1=enabled -Dgles2=enabled -Dplatforms=x11,wayland"
-        ;;
     panfrost)
         gallium_drivers_arg="panfrost"
         vulkan_drivers_arg=""
