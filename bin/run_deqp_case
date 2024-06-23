@@ -1,6 +1,4 @@
-#!/bin/sh
-
-set -e
+#!/bin/bash
 
 if [ "$#" -le 1 ]; then
     echo "usage: <api> <deqp_test> [run_mode]"
@@ -73,9 +71,8 @@ mkdir -p $CURRENT_DIR/deqp_result
 
 target_dir=$VK_GL_CTS_BUILD_DIR/$deqp_path
 
-
 pushd $target_dir
-exec $exec_prefix ./$deqp_binary \
+$exec_prefix ./$deqp_binary \
           --deqp-surface-type=$deqp_surface_type \
           --deqp-gl-config-name=rgba8888d24s8ms0 \
           --deqp-surface-width=256 \
@@ -83,4 +80,18 @@ exec $exec_prefix ./$deqp_binary \
           --deqp-visibility=hidden \
           --deqp-case="$deqp_test" \
           --deqp-log-filename=$CURRENT_DIR/deqp_result/TestResults.qpa
+deqp_error_code=$?
+
+# Early exit in case of non standard error code
+if [[ $deqp_error_code != "0" && $deqp_error_code != "1" ]] then
+    exit $deqp_error_code
+fi
 popd
+
+if [ -f $CURRENT_DIR/deqp_result/TestResults.qpa ]; then
+    $VK_GL_CTS_BUILD_DIR/executor/testlog-to-xml "$CURRENT_DIR/deqp_result/TestResults.qpa" "$CURRENT_DIR/deqp_result/TestResults.xml"
+    cp $VK_GL_CTS_ROOT_DIR/doc/testlog-stylesheet/testlog.css $CURRENT_DIR/deqp_result
+    cp $VK_GL_CTS_ROOT_DIR/doc/testlog-stylesheet/testlog.xsl $CURRENT_DIR/deqp_result
+fi
+
+exit $deqp_error_code
