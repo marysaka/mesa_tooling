@@ -83,6 +83,16 @@ case $driver in
         ;;
     panfrost+vk)
         export PAN_I_WANT_A_BROKEN_VULKAN_DRIVER=1
+        export PANVK_DEBUG=no_known_warn
+
+        gallium_drivers_arg="panfrost,zink"
+        vulkan_drivers_arg="panfrost"
+        tools_args="nir,panfrost,drm-shim"
+        extra_meson_args=""
+        ;;
+    panfrost+vk+debugoptimized)
+        export PAN_I_WANT_A_BROKEN_VULKAN_DRIVER=1
+        export PANVK_DEBUG=no_known_warn
 
         gallium_drivers_arg="panfrost,zink"
         vulkan_drivers_arg="panfrost"
@@ -174,6 +184,8 @@ esac
 
 if [[ $driver == *"release"* ]]; then
     extra_meson_args="${extra_meson_args} -Dbuildtype=release"
+elif [[ $driver == *"debugoptimized"* ]]; then
+    extra_meson_args="${extra_meson_args} -Dbuildtype=debugoptimized"
 else
     extra_meson_args="${extra_meson_args} -Dbuildtype=debug -Dbuild-tests=true"
 fi
