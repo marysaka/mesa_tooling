@@ -7,7 +7,7 @@ source $MESA_TOOLING_PATH/mesa_env
 echo "= Install dependencies"
 sudo dnf groupinstall "C Development Tools and Libraries" -y
 sudo dnf builddep mesa -y
-sudo dnf install libglvnd-devel llvm clang lld gdb git cmake -y
+sudo dnf install libglvnd-devel llvm clang lld gdb git cmake clinfo -y
 
 if [ ! -d "$VK_GL_CTS_ROOT_DIR" ]; then
     echo "= Cloning VK-GL-CTS"
@@ -17,6 +17,36 @@ if [ ! -d "$VK_GL_CTS_ROOT_DIR" ]; then
     python3 external/fetch_sources.py
 fi
 
+if [ ! -d "$CL_HEADERS_ROOT_DIR" ]; then
+    echo "= Cloning OpenCL-Headers"
+    git clone https://github.com/KhronosGroup/OpenCL-Headers.git $CL_HEADERS_ROOT_DIR
+fi
+
+if [ ! -d "$CL_ICD_ROOT_DIR" ]; then
+    echo "= Cloning OpenCL-ICD-Loader"
+    git clone https://github.com/KhronosGroup/OpenCL-ICD-Loader.git $CL_ICD_ROOT_DIR
+fi
+
+if [ ! -d "$CL_CTS_ROOT_DIR" ]; then
+    echo "= Cloning OpenCL-CTS"
+    git clone https://github.com/KhronosGroup/OpenCL-CTS.git $CL_CTS_ROOT_DIR
+fi
+
+if [ ! -d "$CL_ICD_BUILD_DIR" ]; then
+    echo "= Building OpenCL-ICD-Loader"
+    mkdir -p $CL_ICD_BUILD_DIR
+    cd $CL_ICD_BUILD_DIR
+    cmake $CL_ICD_ROOT_DIR -DOPENCL_ICD_LOADER_HEADERS_DIR=$CL_HEADERS_ROOT_DIR -DCMAKE_BUILD_TYPE=Release -G Ninja
+    ninja
+fi
+
+if [ ! -d "$CL_CTS_BUILD_DIR" ]; then
+    echo "= Building OpenCL-ICD-Loader"
+    mkdir -p $CL_CTS_BUILD_DIR
+    cd $CL_CTS_BUILD_DIR
+    cmake $CL_CTS_ROOT_DIR -DCL_INCLUDE_DIR=$CL_HEADERS_ROOT_DIR -DCL_LIB_DIR=$CL_ICD_BUILD_DIR -DOPENCL_LIBRARIES=OpenCL -DCMAKE_BUILD_TYPE=Release -G Ninja
+    ninja
+fi
 
 if [ ! -d "$VK_GL_CTS_BUILD_DIR" ]; then
     echo "= Building VK-GL-CTS"

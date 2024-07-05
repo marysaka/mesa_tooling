@@ -17,6 +17,8 @@ if [ -z "$build_dir_name" ]; then
     build_dir_name=$driver
 fi
 
+RUSTICL_BUILD_ARGS="-Dgallium-rusticl=true -Dllvm=enabled -Drust_std=2021"
+
 case $driver in
     asahi)
         gallium_drivers_arg="asahi"
@@ -75,6 +77,13 @@ case $driver in
         tools_args="nir,panfrost,drm-shim"
         extra_meson_args=""
         ;;
+    panfrost+rusticl)
+        export RUSTICL_ENABLE="radeonsi"
+        gallium_drivers_arg="panfrost"
+        vulkan_drivers_arg=""
+        tools_args="nir,panfrost,drm-shim"
+        extra_meson_args="$RUSTICL_BUILD_ARGS"
+        ;;
     panfrost+release)
         gallium_drivers_arg="panfrost"
         vulkan_drivers_arg=""
@@ -128,6 +137,13 @@ case $driver in
         tools_args="nir,freedreno,drm-shim"
         extra_meson_args=""
         ;;
+    amd+rusticl)
+        export RUSTICL_ENABLE="radeonsi"
+        gallium_drivers_arg="radeonsi"
+        vulkan_drivers_arg=""
+        tools_args="nir,drm-shim"
+        extra_meson_args="$RUSTICL_BUILD_ARGS"
+        ;;
     amd+vk)
         export CC=clang
         export CXX=clang++
@@ -174,7 +190,7 @@ case $driver in
         gallium_drivers_arg="all"
         vulkan_drivers_arg="all"
         tools_args="nir"
-        extra_meson_args=""
+        extra_meson_args="$RUSTICL_BUILD_ARGS"
         ;;
     *)
         echo "Unknown driver: $driver"
