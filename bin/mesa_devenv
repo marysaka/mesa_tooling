@@ -84,6 +84,13 @@ case $driver in
         tools_args="nir,panfrost,drm-shim"
         extra_meson_args="$RUSTICL_BUILD_ARGS"
         ;;
+    panfrost+rusticl+debugoptimized)
+        export RUSTICL_ENABLE="radeonsi"
+        gallium_drivers_arg="panfrost"
+        vulkan_drivers_arg=""
+        tools_args="nir,panfrost,drm-shim"
+        extra_meson_args="$RUSTICL_BUILD_ARGS"
+        ;;
     panfrost+release)
         gallium_drivers_arg="panfrost"
         vulkan_drivers_arg=""
