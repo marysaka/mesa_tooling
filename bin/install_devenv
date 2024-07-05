@@ -41,7 +41,7 @@ if [ ! -d "$CL_ICD_BUILD_DIR" ]; then
 fi
 
 if [ ! -d "$CL_CTS_BUILD_DIR" ]; then
-    echo "= Building OpenCL-ICD-Loader"
+    echo "= Building OpenCL-CTS"
     mkdir -p $CL_CTS_BUILD_DIR
     cd $CL_CTS_BUILD_DIR
     cmake $CL_CTS_ROOT_DIR -DCL_INCLUDE_DIR=$CL_HEADERS_ROOT_DIR -DCL_LIB_DIR=$CL_ICD_BUILD_DIR -DOPENCL_LIBRARIES=OpenCL -DCMAKE_BUILD_TYPE=Release -G Ninja
