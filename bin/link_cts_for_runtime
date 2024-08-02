@@ -1,0 +1,55 @@
+#!/bin/sh
+
+set -e
+
+if [ "$#" -eq 0 ]; then
+    echo "usage: <cts_path>"
+    exit 1
+fi
+
+cts_path=$1
+
+sudo mkdir -p /deqp
+sudo mkdir -p /deqp/mustpass
+
+# EGL
+sudo ln -f -n -s $cts_path/bin/deqp-egl-wayland /deqp/modules/egl/deqp-egl-wayland
+sudo ln -f -n -s $cts_path/bin/deqp-egl-x11 /deqp/modules/egl/deqp-egl-x11
+sudo ln -f -n -s $cts_path/mustpass/egl/aosp_mustpass/main/egl-main.txt /deqp/mustpass/egl-main.txt
+
+# Vulkan
+sudo mkdir -p /deqp/external/vulkancts/modules/vulkan/
+sudo ln -f -n -s $cts_path/mustpass/vk/main/vk-main.txt /deqp/mustpass/vk-main.txt
+sudo ln -f -n -s $cts_path/bin/deqp-vk /deqp/external/vulkancts/modules/vulkan/deqp-vk
+
+# OpenGL
+sudo mkdir -p /deqp/external/openglcts/modules/vulkan/
+sudo mkdir /deqp/modules/gles{2,3,31}
+sudo ln -f -n -s $cts_path/bin/glcts /deqp/external/openglcts/modules/glcts
+sudo ln -f -n -s $cts_path/bin/deqp-gles2 /deqp/modules/gles2/deqp-gles2
+sudo ln -f -n -s $cts_path/bin/deqp-gles3 /deqp/modules/gles3/deqp-gles3
+sudo ln -f -n -s $cts_path/bin/deqp-gles31 /deqp/modules/gles31/deqp-gles31
+
+# OpenGL ES cases
+sudo ln -f -n -s $cts_path/mustpass/gles/aosp_mustpass/main/gles2-main.txt /deqp/mustpass/gles2-main.txt
+sudo ln -f -n -s $cts_path/mustpass/gles/khronos_mustpass/main/gles2-khr-main.txt /deqp/mustpass/gles2-khr-main.txt
+sudo ln -f -n -s $cts_path/mustpass/gles/aosp_mustpass/main/gles3-main.txt /deqp/mustpass/gles3-main.txt
+sudo ln -f -n -s $cts_path/mustpass/gles/khronos_mustpass/main/gles3-khr-main.txt /deqp/mustpass/gles3-khr-main.txt
+sudo ln -f -n -s $cts_path/mustpass/gles/aosp_mustpass/main/gles31-main.txt /deqp/mustpass/gles31-main.txt
+sudo ln -f -n -s $cts_path/mustpass/gles/khronos_mustpass/main/gles31-khr-main.txt /deqp/mustpass/gles31-khr-main.txt
+sudo ln -f -n -s $cts_path/mustpass/gles/khronos_mustpass/main/gles32-khr-main.txt /deqp/mustpass/gles32-khr-main.txt
+
+# OpenGL Core cases
+sudo ln -f -n -s $cts_path/mustpass/gl/khronos_mustpass/main/gl30-main.txt /deqp/mustpass/gl30-main.txt
+sudo ln -f -n -s $cts_path/mustpass/gl/khronos_mustpass/main/gles30-multisample.txt /deqp/mustpass/gles30-multisample.txt
+sudo ln -f -n -s $cts_path/mustpass/gl/khronos_mustpass/main/gl31-main.txt /deqp/mustpass/gl31-main.txt
+sudo ln -f -n -s $cts_path/mustpass/gl/khronos_mustpass/main/gles31-multisample.txt /deqp/mustpass/gles31-multisample.txt
+sudo ln -f -n -s $cts_path/mustpass/gl/khronos_mustpass/main/gl32-main.txt /deqp/mustpass/gl32-main.txt
+sudo ln -f -n -s $cts_path/mustpass/gl/khronos_mustpass/main/gl33-main.txt /deqp/mustpass/gl33-main.txt
+sudo ln -f -n -s $cts_path/mustpass/gl/khronos_mustpass/main/gl40-main.txt /deqp/mustpass/gl40-main.txt
+sudo ln -f -n -s $cts_path/mustpass/gl/khronos_mustpass/main/gl41-main.txt /deqp/mustpass/gl41-main.txt
+sudo ln -f -n -s $cts_path/mustpass/gl/khronos_mustpass/main/gl42-main.txt /deqp/mustpass/gl42-main.txt
+sudo ln -f -n -s $cts_path/mustpass/gl/khronos_mustpass/main/gl43-main.txt /deqp/mustpass/gl43-main.txt
+sudo ln -f -n -s $cts_path/mustpass/gl/khronos_mustpass/main/gl44-main.txt /deqp/mustpass/gl44-main.txt
+sudo ln -f -n -s $cts_path/mustpass/gl/khronos_mustpass/main/gl45-main.txt /deqp/mustpass/gl45-main.txt
+sudo ln -f -n -s $cts_path/mustpass/gl/khronos_mustpass/main/gl46-main.txt /deqp/mustpass/gl46-main.txt
