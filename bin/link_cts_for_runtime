@@ -13,6 +13,7 @@ sudo mkdir -p /deqp
 sudo mkdir -p /deqp/mustpass
 
 # EGL
+sudo mkdir -p /deqp/modules/egl
 sudo ln -f -n -s $cts_path/bin/deqp-egl-wayland /deqp/modules/egl/deqp-egl-wayland
 sudo ln -f -n -s $cts_path/bin/deqp-egl-x11 /deqp/modules/egl/deqp-egl-x11
 sudo ln -f -n -s $cts_path/mustpass/egl/aosp_mustpass/main/egl-main.txt /deqp/mustpass/egl-main.txt
