@@ -23,4 +23,4 @@ if [ ! -s "$VNC_DATA_DIR/selfsigned.key" ]; then
     # openssl x509 -req -days 365000 -in $VNC_DATA_DIR/tls.csr -out $VNC_DATA_DIR/tls.crt -CA $VNC_DATA_DIR/cacert.pem -CAkey $VNC_DATA_DIR/cakey.pem
 fi
 
-exec weston -Bvnc --renderer=gl --xwayland --vnc-tls-cert=$VNC_DATA_DIR/selfsigned.crt --vnc-tls-key=$VNC_DATA_DIR/selfsigned.key
+exec weston -Bvnc --renderer=gl --xwayland --vnc-tls-cert=$VNC_DATA_DIR/selfsigned.crt --vnc-tls-key=$VNC_DATA_DIR/selfsigned.key $@
