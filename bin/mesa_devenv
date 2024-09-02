@@ -35,9 +35,9 @@ case $driver in
 
     asahi+vk)
         gallium_drivers_arg="asahi"
-        vulkan_drivers_arg="asahi-experimental"
+        vulkan_drivers_arg="asahi"
         tools_args="nir,asahi,drm-shim"
-        extra_meson_args="-Dllvm=disabled"
+        extra_meson_args=""
         ;;
     asahi+dvk)
         export CC=clang
