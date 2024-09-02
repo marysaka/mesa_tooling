@@ -1,0 +1,26 @@
+#!/bin/sh
+
+set -e
+
+source $MESA_TOOLING_PATH/mesa_env
+
+VNC_DATA_DIR=$MESA_TOOLING_PATH/data/vnc
+
+mkdir -p $VNC_DATA_DIR
+
+if [ ! -s "$VNC_DATA_DIR/selfsigned.key" ]; then
+    openssl req -x509 -newkey rsa:4096 \
+                      -keyout $VNC_DATA_DIR/selfsigned.key \
+                      -out $VNC_DATA_DIR/selfsigned.crt \
+                      -sha256 -days 3650 -nodes \
+                      -subj "/C=FR/L=Paris/O=Mary Corp/OU=MC/CN=weston/emailAddress=weston@mary.zone"
+
+    # openssl genrsa -out $VNC_DATA_DIR/cakey.pem 4096
+    # openssl req -new -x509 -nodes -days 365000 -key $VNC_DATA_DIR/cakey.pem -out $VNC_DATA_DIR/cacert.pem
+    # openssl genrsa -out $VNC_DATA_DIR/tls.key 4096
+    # openssl req -new -key $VNC_DATA_DIR/tls.key -out $VNC_DATA_DIR/tls.csr
+    # openssl req -new -key $VNC_DATA_DIR/tls.key -out $VNC_DATA_DIR/tls.csr -subj "/CN=weston"
+    # openssl x509 -req -days 365000 -in $VNC_DATA_DIR/tls.csr -out $VNC_DATA_DIR/tls.crt -CA $VNC_DATA_DIR/cacert.pem -CAkey $VNC_DATA_DIR/cakey.pem
+fi
+
+exec weston -Bvnc --renderer=gl --xwayland --vnc-tls-cert=$VNC_DATA_DIR/selfsigned.crt --vnc-tls-key=$VNC_DATA_DIR/selfsigned.key
