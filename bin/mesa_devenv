@@ -24,13 +24,13 @@ case $driver in
         gallium_drivers_arg="asahi"
         vulkan_drivers_arg=""
         tools_args="nir,asahi,drm-shim"
-        extra_meson_args="-Dglx=dri -Dglvnd=enabled"
+        extra_meson_args=""
         ;;
     asahi+release)
         gallium_drivers_arg="asahi"
         vulkan_drivers_arg=""
         tools_args="nir,asahi,drm-shim"
-        extra_meson_args="-Dglx=dri -Dglvnd=enabled"
+        extra_meson_args=""
         ;;
 
     asahi+vk)
@@ -67,7 +67,7 @@ case $driver in
         gallium_drivers_arg="nouveau,zink"
         vulkan_drivers_arg="nouveau"
         tools_args="nir,nouveau,drm-shim"
-        extra_meson_args="-Dglx=dri -Dglvnd=enabled"
+        extra_meson_args=""
         ;;
     panfrost)
         gallium_drivers_arg="panfrost"
@@ -93,7 +93,7 @@ case $driver in
         gallium_drivers_arg="panfrost"
         vulkan_drivers_arg=""
         tools_args="nir,panfrost,drm-shim"
-        extra_meson_args="-Dglx=dri -Dglvnd=enabled"
+        extra_meson_args=""
         ;;
     panfrost+vk)
         export PAN_I_WANT_A_BROKEN_VULKAN_DRIVER=1
@@ -119,7 +119,7 @@ case $driver in
         gallium_drivers_arg="panfrost,zink"
         vulkan_drivers_arg="panfrost"
         tools_args="nir,panfrost,drm-shim"
-        extra_meson_args="-Dglx=dri -Dglvnd=enabled"
+        extra_meson_args=""
         ;;
     freedreno)
         gallium_drivers_arg="freedreno,zink"
