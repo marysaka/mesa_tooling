@@ -39,11 +39,9 @@ case $driver in
         tools_args="nir,asahi,drm-shim"
         extra_meson_args=""
         ;;
-    asahi+dvk)
-        export CC=clang
-        export CXX=clang++
-        gallium_drivers_arg="asahi"
-        vulkan_drivers_arg="asahi-experimental"
+    asahi+vk+debugoptimized)
+        gallium_drivers_arg="asahi,zink"
+        vulkan_drivers_arg="asahi"
         tools_args="nir,asahi,drm-shim"
         extra_meson_args=""
         ;;
