@@ -71,6 +71,14 @@ case $driver in
         tools_args="nir,nouveau,drm-shim"
         extra_meson_args=""
         ;;
+    nouveau+vk+debugoptimized)
+        export NVK_I_WANT_A_BROKEN_VULKAN_DRIVER=1
+
+        gallium_drivers_arg="nouveau,zink"
+        vulkan_drivers_arg="nouveau"
+        tools_args="nir,nouveau,drm-shim"
+        extra_meson_args="-Dglx=dri -Dglvnd=enabled"
+        ;;
     nouveau+vk+release)
         export NVK_I_WANT_A_BROKEN_VULKAN_DRIVER=1
 
