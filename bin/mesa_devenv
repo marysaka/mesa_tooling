@@ -211,6 +211,12 @@ else
     extra_meson_args="${extra_meson_args} -Dbuildtype=debug -Dbuild-tests=true"
 fi
 
+# Enforce vulkan layer for device-select
+if [[ $driver == *"vk"* ]]; then
+    extra_meson_args="-Dvulkan-layers=device-select"
+fi
+
+
 if [[ $driver == *"all"* ]]; then
     driver_basename="mesa"
 elif [[ $driver == *"asahi"* ]]; then
