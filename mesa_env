@@ -9,8 +9,11 @@ if [ -z "$MESA_TOOLING_ENV" ]; then
         export MESA_TOOLING_BUILD_DIR=$HOME/build
     fi
 
+    if [ -z "$VK_GL_CTS_BUILD_DIR" ]; then
+        export VK_GL_CTS_BUILD_DIR=$MESA_TOOLING_BUILD_DIR/VK-GL-CTS
+    fi
+
     export MESA_BUILD_BASE_DIR=$MESA_TOOLING_BUILD_DIR/mesa
-    export VK_GL_CTS_BUILD_DIR=$MESA_TOOLING_BUILD_DIR/VK-GL-CTS
     export CL_CTS_BUILD_DIR=$MESA_TOOLING_BUILD_DIR/OpenCL-CTS
     export CL_ICD_BUILD_DIR=$MESA_TOOLING_BUILD_DIR/OpenCL-ICD-Loader
 
