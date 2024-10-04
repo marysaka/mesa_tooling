@@ -28,6 +28,7 @@ case $driver in
         ;;
 
     asahi+vk|asahi+vk+debugoptimized|asahi+vk+release)
+        export HK_I_LIKE_ROTTEN_APPLES=1
         gallium_drivers_arg="asahi,zink"
         vulkan_drivers_arg="asahi"
         tools_args="nir,asahi,drm-shim"
@@ -155,6 +156,7 @@ case $driver in
         ;;
 
     vk+all)
+        export HK_I_LIKE_ROTTEN_APPLES=1
         export PVR_I_WANT_A_BROKEN_VULKAN_DRIVER=1
         export NVK_I_WANT_A_BROKEN_VULKAN_DRIVER=1
         export PAN_I_WANT_A_BROKEN_VULKAN_DRIVER=1
