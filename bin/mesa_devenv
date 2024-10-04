@@ -20,38 +20,28 @@ fi
 RUSTICL_BUILD_ARGS="-Dgallium-rusticl=true -Dllvm=enabled -Drust_std=2021"
 
 case $driver in
-    asahi)
-        gallium_drivers_arg="asahi"
-        vulkan_drivers_arg=""
-        tools_args="nir,asahi,drm-shim"
-        extra_meson_args=""
-        ;;
-    asahi+release)
+    asahi|asahi+debugoptimized|asahi+release)
         gallium_drivers_arg="asahi"
         vulkan_drivers_arg=""
         tools_args="nir,asahi,drm-shim"
         extra_meson_args=""
         ;;
 
-    asahi+vk)
-        gallium_drivers_arg="asahi"
-        vulkan_drivers_arg="asahi"
-        tools_args="nir,asahi,drm-shim"
-        extra_meson_args=""
-        ;;
-    asahi+vk+debugoptimized)
+    asahi+vk|asahi+vk+debugoptimized|asahi+vk+release)
         gallium_drivers_arg="asahi,zink"
         vulkan_drivers_arg="asahi"
         tools_args="nir,asahi,drm-shim"
         extra_meson_args=""
         ;;
-    nouveau)
+
+    nouveau|nouveau+debugoptimized|nouveau+release)
         gallium_drivers_arg="nouveau"
         vulkan_drivers_arg=""
         tools_args="nir,nouveau,drm-shim"
         extra_meson_args=""
         ;;
-    nouveau+vk)
+
+    nouveau+vk|nouveau+vk+debugoptimized|nouveau+vk+release)
         export NVK_I_WANT_A_BROKEN_VULKAN_DRIVER=1
         export NV50_PROG_DEBUG=1
         export NAK_DEBUG=print
@@ -61,6 +51,7 @@ case $driver in
         tools_args="nir,nouveau,drm-shim"
         extra_meson_args=""
         ;;
+
     nouveau+vk+old)
         export NVK_I_WANT_A_BROKEN_VULKAN_DRIVER=1
         export NV50_PROG_DEBUG=1
@@ -71,49 +62,23 @@ case $driver in
         tools_args="nir,nouveau,drm-shim"
         extra_meson_args=""
         ;;
-    nouveau+vk+debugoptimized)
-        export NVK_I_WANT_A_BROKEN_VULKAN_DRIVER=1
 
-        gallium_drivers_arg="nouveau,zink"
-        vulkan_drivers_arg="nouveau"
-        tools_args="nir,nouveau,drm-shim"
-        extra_meson_args="-Dglx=dri -Dglvnd=enabled"
-        ;;
-    nouveau+vk+release)
-        export NVK_I_WANT_A_BROKEN_VULKAN_DRIVER=1
-
-        gallium_drivers_arg="nouveau,zink"
-        vulkan_drivers_arg="nouveau"
-        tools_args="nir,nouveau,drm-shim"
-        extra_meson_args=""
-        ;;
-    panfrost)
+    panfrost|panfrost+debugoptimized|panfrost+release)
         gallium_drivers_arg="panfrost"
         vulkan_drivers_arg=""
         tools_args="nir,panfrost,drm-shim"
         extra_meson_args=""
         ;;
-    panfrost+rusticl)
+
+    panfrost+rusticl|panfrost+rusticl+debugoptimized|panfrost+rusticl+release)
         export RUSTICL_ENABLE="panfrost"
         gallium_drivers_arg="panfrost"
         vulkan_drivers_arg=""
         tools_args="nir,panfrost,drm-shim"
         extra_meson_args="$RUSTICL_BUILD_ARGS"
         ;;
-    panfrost+rusticl+debugoptimized)
-        export RUSTICL_ENABLE="panfrost"
-        gallium_drivers_arg="panfrost"
-        vulkan_drivers_arg=""
-        tools_args="nir,panfrost,drm-shim"
-        extra_meson_args="$RUSTICL_BUILD_ARGS"
-        ;;
-    panfrost+release)
-        gallium_drivers_arg="panfrost"
-        vulkan_drivers_arg=""
-        tools_args="nir,panfrost,drm-shim"
-        extra_meson_args=""
-        ;;
-    panfrost+vk)
+
+    panfrost+vk|panfrost+vk+debugoptimized|panfrost+vk+release)
         export PAN_I_WANT_A_BROKEN_VULKAN_DRIVER=1
         export PANVK_DEBUG=no_known_warn
 
@@ -122,52 +87,30 @@ case $driver in
         tools_args="nir,panfrost,drm-shim"
         extra_meson_args=""
         ;;
-    panfrost+vk+debugoptimized)
-        export PAN_I_WANT_A_BROKEN_VULKAN_DRIVER=1
-        export PANVK_DEBUG=no_known_warn
 
-        gallium_drivers_arg="panfrost,zink"
-        vulkan_drivers_arg="panfrost"
-        tools_args="nir,panfrost,drm-shim"
-        extra_meson_args=""
-        ;;
-    panfrost+vk+release)
-        export PAN_I_WANT_A_BROKEN_VULKAN_DRIVER=1
-
-        gallium_drivers_arg="panfrost,zink"
-        vulkan_drivers_arg="panfrost"
-        tools_args="nir,panfrost,drm-shim"
-        extra_meson_args=""
-        ;;
-    freedreno)
+    freedreno|freedreno+debugoptimized|freedreno+release)
         gallium_drivers_arg="freedreno,zink"
         vulkan_drivers_arg=""
         tools_args="nir,freedreno,drm-shim"
         extra_meson_args=""
         ;;
-    freedreno+vk)
-        gallium_drivers_arg="freedreno,zink"
-        vulkan_drivers_arg="freedreno"
-        tools_args="nir,freedreno,drm-shim"
-        extra_meson_args=""
-        ;;
-    freedreno+vk+release)
-        export ALT_LOCAL=/opt/local/freedreno
-        export PKG_CONFIG_PATH=$ALT_LOCAL/lib/pkgconfig
 
+    freedreno+vk|freedreno+vk+debugoptimized|freedreno+vk+release)
         gallium_drivers_arg="freedreno,zink"
         vulkan_drivers_arg="freedreno"
         tools_args="nir,freedreno,drm-shim"
         extra_meson_args=""
         ;;
-    amd+rusticl)
+
+    amd+rusticl|amd+rusticl+debugoptimized|amd+rusticl+release)
         export RUSTICL_ENABLE="radeonsi"
         gallium_drivers_arg="radeonsi"
         vulkan_drivers_arg=""
         tools_args="nir,drm-shim"
         extra_meson_args="$RUSTICL_BUILD_ARGS"
         ;;
-    amd+vk)
+
+    amd+vk|amd+vk+debugoptimized|amd+vk+release)
         export CC=clang
         export CXX=clang++
         gallium_drivers_arg="radeonsi,zink"
@@ -175,36 +118,42 @@ case $driver in
         tools_args="nir,drm-shim"
         extra_meson_args=""
         ;;
-    intel+vk)
+
+    intel+vk|intel+vk+debugoptimized|intel+vk+release)
         gallium_drivers_arg="i915,zink"
         vulkan_drivers_arg="intel"
         tools_args="nir,drm-shim"
         extra_meson_args=""
         ;;
-    virgl)
+
+    virgl|virgl+debugoptimized|virgl+release)
         gallium_drivers_arg="radeonsi,i915,iris,swrast,virgl,zink"
         vulkan_drivers_arg="amd,intel,virtio,swrast"
         tools_args="nir"
         extra_meson_args="-Dgles1=enabled -Dgles2=enabled -Dplatforms=x11,wayland"
         ;;
-    zink)
+
+    zink|zink+debugoptimized|zink+release)
         gallium_drivers_arg="zink"
         vulkan_drivers_arg=""
         tools_args="nir"
         extra_meson_args="-Dgles1=enabled -Dgles2=enabled -Dplatforms=x11,wayland"
         ;;
-    virtio+vk)
+
+    virtio+vk|virtio+vk+debugoptimized|virtio+vk+release)
         gallium_drivers_arg=""
         vulkan_drivers_arg="virtio"
         tools_args="nir"
         extra_meson_args="-Dgles1=enabled -Dgles2=enabled -Dplatforms=x11,wayland"
         ;;
+
     vulkan-layers)
         gallium_drivers_arg=""
         vulkan_drivers_arg=""
         tools_args=""
         extra_meson_args="-Dllvm=disabled -Dgles1=disabled -Dgles2=disabled -Dshared-glapi=disabled -Dopengl=false -Degl=disabled -Dglx=disabled -Dvulkan-layers=overlay,nv-shader-dump"
         ;;
+
     vk+all)
         export PVR_I_WANT_A_BROKEN_VULKAN_DRIVER=1
         export NVK_I_WANT_A_BROKEN_VULKAN_DRIVER=1
@@ -215,6 +164,7 @@ case $driver in
         tools_args="nir"
         extra_meson_args="$RUSTICL_BUILD_ARGS"
         ;;
+
     *)
         echo "Unknown driver: $driver"
         exit 1
