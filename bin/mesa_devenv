@@ -30,6 +30,14 @@ case $driver in
         extra_meson_args=""
         ;;
 
+    asahi+rusticl|asahi+rusticl+debugoptimized|asahi+rusticl+release)
+        export RUSTICL_ENABLE="asahi"
+        gallium_drivers_arg="asahi"
+        vulkan_drivers_arg=""
+        tools_args="nir,asahi,drm-shim"
+        extra_meson_args="$RUSTICL_BUILD_ARGS"
+        ;;
+
     asahi+vk|asahi+vk+debugoptimized|asahi+vk+release)
         export HK_I_LIKE_ROTTEN_APPLES=1
         gallium_drivers_arg="asahi,zink"
