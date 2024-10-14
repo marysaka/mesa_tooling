@@ -42,6 +42,13 @@ case $driver in
         extra_meson_args=""
         ;;
 
+    nouveau+ngl|nouveau+ngl+debugoptimized|nouveau+ngl+release)
+        gallium_drivers_arg="ngl"
+        vulkan_drivers_arg=""
+        tools_args="nir,nouveau,drm-shim"
+        extra_meson_args=""
+        ;;
+
     nouveau+vk|nouveau+vk+debugoptimized|nouveau+vk+release)
         export NVK_I_WANT_A_BROKEN_VULKAN_DRIVER=1
         export NV50_PROG_DEBUG=1
