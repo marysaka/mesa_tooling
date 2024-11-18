@@ -162,14 +162,14 @@ case $driver in
         extra_meson_args="-Dllvm=disabled -Dgles1=disabled -Dgles2=disabled -Dshared-glapi=disabled -Dopengl=false -Degl=disabled -Dglx=disabled -Dvulkan-layers=overlay,nv-shader-dump"
         ;;
 
-    vk+all)
+    vk+all|vk+all+debugoptimized)
         export HK_I_LIKE_ROTTEN_APPLES=1
         export PVR_I_WANT_A_BROKEN_VULKAN_DRIVER=1
         export NVK_I_WANT_A_BROKEN_VULKAN_DRIVER=1
         export PAN_I_WANT_A_BROKEN_VULKAN_DRIVER=1
 
-        gallium_drivers_arg="all"
-        vulkan_drivers_arg="all"
+        gallium_drivers_arg="auto"
+        vulkan_drivers_arg="auto"
         tools_args="nir"
         extra_meson_args="$RUSTICL_BUILD_ARGS"
         ;;
