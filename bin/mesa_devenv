@@ -5,6 +5,9 @@ source $MESA_TOOLING_PATH/mesa_env
 export MESA_VK_IGNORE_CONFORMANCE_WARNING=true
 export MESA_SHADER_CACHE_DISABLE=true
 
+# Enforce zsh (vscodium seems to have SHELL set to bash for some reasons, let's bypass that for devenv needs)
+export SHELL=/bin/zsh
+
 if [ "$#" -le 0 ]; then
     echo "usage: <driver> [build_dir_name]"
     exit 1
