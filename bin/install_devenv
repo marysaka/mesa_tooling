@@ -7,7 +7,7 @@ source $MESA_TOOLING_PATH/mesa_env
 echo "= Install dependencies"
 sudo dnf group install c-development -y
 sudo dnf builddep mesa -y
-sudo dnf install libglvnd-devel llvm clang lld gdb git cmake clinfo -y
+sudo dnf install libglvnd-devel llvm clang lld gdb git cmake clinfo zstd -y
 
 $MESA_TOOLING_PATH/bin/setup_cts_build.py
 
