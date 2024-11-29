@@ -9,8 +9,20 @@ if [ -z "$MESA_TOOLING_ENV" ]; then
         export MESA_TOOLING_BUILD_DIR=$HOME/build
     fi
 
-    if [ -z "$VK_GL_CTS_BUILD_DIR" ]; then
-        export VK_GL_CTS_BUILD_DIR=$MESA_TOOLING_BUILD_DIR/VK-GL-CTS
+    if [ -z "$DEQP_TOOLS_BUILD_DIR" ]; then
+        export DEQP_TOOLS_BUILD_DIR=/deqp-tools
+    fi
+
+    if [ -z "$DEQP_VK_BUILD_DIR" ]; then
+        export DEQP_VK_BUILD_DIR=/deqp-vk
+    fi
+
+    if [ -z "$DEQP_GL_BUILD_DIR" ]; then
+        export DEQP_GL_BUILD_DIR=/deqp-gl
+    fi
+
+    if [ -z "$DEQP_GLES_BUILD_DIR" ]; then
+        export DEQP_GLES_BUILD_DIR=/deqp-gles
     fi
 
     export MESA_BUILD_BASE_DIR=$MESA_TOOLING_BUILD_DIR/mesa
@@ -18,13 +30,9 @@ if [ -z "$MESA_TOOLING_ENV" ]; then
     export CL_ICD_BUILD_DIR=$MESA_TOOLING_BUILD_DIR/OpenCL-ICD-Loader
 
     export MESA_ROOT_DIR=$MESA_TOOLING_DEV_DIR/mesa
-    export VK_GL_CTS_ROOT_DIR=$MESA_TOOLING_DEV_DIR/VK-GL-CTS
     export CL_CTS_ROOT_DIR=$MESA_TOOLING_DEV_DIR/OpenCL-CTS
     export CL_ICD_ROOT_DIR=$MESA_TOOLING_DEV_DIR/OpenCL-ICD-Loader
     export CL_HEADERS_ROOT_DIR=$MESA_TOOLING_DEV_DIR/OpenCL-Headers
-
-    export VULKAN_CTS_PATH=$VK_GL_CTS_ROOT_DIR/external/vulkancts
-    export OPENGL_CTS_PATH=$VK_GL_CTS_ROOT_DIR/external/openglcts
 
     export MESA_TOOLING_ENV=1
 fi

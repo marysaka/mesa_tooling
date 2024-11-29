@@ -25,18 +25,22 @@ case $api in
     gles2)
         deqp_path=modules/gles2
         deqp_binary=deqp-gles2
+        deqp_build_path="$DEQP_GLES_BUILD_DIR"
         ;;
     gles3)
         deqp_path=modules/gles3
         deqp_binary=deqp-gles3
+        deqp_build_path="$DEQP_GLES_BUILD_DIR"
         ;;
     gles31)
         deqp_path=modules/gles31
         deqp_binary=deqp-gles31
+        deqp_build_path="$DEQP_GLES_BUILD_DIR"
         ;;
     gl)
         deqp_path=external/openglcts/modules
         deqp_binary=glcts
+        deqp_build_path="$DEQP_GL_BUILD_DIR"
         deqp_surface_type=window
 
         unset EGL_PLATFORM
@@ -44,6 +48,7 @@ case $api in
     vk)
         deqp_path=external/vulkancts/modules/vulkan
         deqp_binary=deqp-vk
+        deqp_build_path="$DEQP_VK_BUILD_DIR"
         ;;
     *)
         echo "Unknown API: $api"
@@ -69,7 +74,7 @@ CURRENT_DIR=$MESA_ROOT_DIR
 rm -rf $CURRENT_DIR/deqp_result/TestResults.qpa
 mkdir -p $CURRENT_DIR/deqp_result
 
-target_dir=$VK_GL_CTS_BUILD_DIR/$deqp_path
+target_dir=$deqp_build_path/$deqp_path
 
 pushd $target_dir
 $exec_prefix ./$deqp_binary \
@@ -89,9 +94,9 @@ fi
 popd
 
 if [ -f $CURRENT_DIR/deqp_result/TestResults.qpa ]; then
-    $VK_GL_CTS_BUILD_DIR/executor/testlog-to-xml "$CURRENT_DIR/deqp_result/TestResults.qpa" "$CURRENT_DIR/deqp_result/TestResults.xml"
-    cp $VK_GL_CTS_ROOT_DIR/doc/testlog-stylesheet/testlog.css $CURRENT_DIR/deqp_result
-    cp $VK_GL_CTS_ROOT_DIR/doc/testlog-stylesheet/testlog.xsl $CURRENT_DIR/deqp_result
+    $DEQP_TOOLS_BUILD_DIR/testlog-to-xml "$CURRENT_DIR/deqp_result/TestResults.qpa" "$CURRENT_DIR/deqp_result/TestResults.xml"
+    cp $deqp_build_path/testlog.css $CURRENT_DIR/deqp_result
+    cp $deqp_build_path/testlog.xsl $CURRENT_DIR/deqp_result
 fi
 
 exit $deqp_error_code

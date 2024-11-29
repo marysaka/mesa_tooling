@@ -9,13 +9,7 @@ sudo dnf group install c-development -y
 sudo dnf builddep mesa -y
 sudo dnf install libglvnd-devel llvm clang lld gdb git cmake clinfo -y
 
-if [ ! -d "$VK_GL_CTS_ROOT_DIR" ]; then
-    echo "= Cloning VK-GL-CTS"
-    git clone https://github.com/KhronosGroup/VK-GL-CTS.git $VK_GL_CTS_ROOT_DIR
-
-    cd $VK_GL_CTS_ROOT_DIR
-    python3 external/fetch_sources.py
-fi
+$MESA_TOOLING_PATH/bin/setup_cts_build.py
 
 if [ ! -d "$CL_HEADERS_ROOT_DIR" ]; then
     echo "= Cloning OpenCL-Headers"
@@ -45,14 +39,6 @@ if [ ! -d "$CL_CTS_BUILD_DIR" ]; then
     mkdir -p $CL_CTS_BUILD_DIR
     cd $CL_CTS_BUILD_DIR
     cmake $CL_CTS_ROOT_DIR -DCL_INCLUDE_DIR=$CL_HEADERS_ROOT_DIR -DCL_LIB_DIR=$CL_ICD_BUILD_DIR -DOPENCL_LIBRARIES=OpenCL -DCMAKE_BUILD_TYPE=Release -G Ninja
-    ninja
-fi
-
-if [ ! -d "$VK_GL_CTS_BUILD_DIR" ]; then
-    echo "= Building VK-GL-CTS"
-    mkdir -p $VK_GL_CTS_BUILD_DIR
-    cd $VK_GL_CTS_BUILD_DIR
-    cmake $VK_GL_CTS_ROOT_DIR -DDEQP_TARGET=surfaceless -DCMAKE_BUILD_TYPE=Release -G Ninja
     ninja
 fi
 
