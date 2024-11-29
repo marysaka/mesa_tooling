@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+
+if [ "$#" -le 0 ]; then
+    echo "usage: <cts_archive_url>"
+    exit 1
+fi
+
+cts_archive_url="$1"
+cts_archive_path=$(mktemp)
+
+curl --insecure "$cts_archive_url" -o "$cts_archive_path"
+cd /
+sudo rm -rf deqp-gl deqp-gles deqp-vk deqp-tools
+sudo tar -xvf "$cts_archive_path"
+rm "$cts_archive_path"
