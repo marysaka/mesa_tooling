@@ -14,4 +14,9 @@ curl --insecure "$cts_archive_url" -o "$cts_archive_path"
 cd /
 sudo rm -rf deqp-gl deqp-gles deqp-vk deqp-tools
 sudo tar -xvf "$cts_archive_path"
+
+for cts_path in /deqp-gl /deqp-gles /deqp-vk; do
+zstd -f -d $cts_path/mustpass/*.zst
+done
+
 rm "$cts_archive_path"
