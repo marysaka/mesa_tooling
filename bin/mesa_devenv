@@ -152,7 +152,7 @@ case $driver in
         ;;
 
     virtio+vk|virtio+vk+debugoptimized|virtio+vk+release)
-        gallium_drivers_arg=""
+        gallium_drivers_arg="zink"
         vulkan_drivers_arg="virtio"
         tools_args="nir"
         extra_meson_args="-Dgles1=enabled -Dgles2=enabled -Dplatforms=x11,wayland"
