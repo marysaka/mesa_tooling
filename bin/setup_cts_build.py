@@ -9,11 +9,9 @@ import json
 import platform
 import subprocess
 
-GITEA_API_BASE_URL = "https://lastorder/git/api/v1"
+GITEA_API_BASE_URL = "https://git.mary.zone/api/v1"
 
 ssl_ctx = ssl.create_default_context()
-ssl_ctx.check_hostname = False
-ssl_ctx.verify_mode = ssl.CERT_NONE
 
 
 def parse_args() -> argparse.Namespace:

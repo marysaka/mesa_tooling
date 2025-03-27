@@ -10,7 +10,7 @@ fi
 cts_archive_url="$1"
 cts_archive_path=$(mktemp)
 
-curl --insecure "$cts_archive_url" -o "$cts_archive_path"
+curl "$cts_archive_url" -o "$cts_archive_path"
 cd /
 sudo rm -rf deqp-gl deqp-gles deqp-vk deqp-tools
 sudo tar -xvf "$cts_archive_path"
