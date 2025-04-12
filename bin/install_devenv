@@ -44,13 +44,13 @@ fi
 
 if [ ! -d "$MESA_ROOT_DIR" ]; then
     echo "= Cloning mesa"
-    git clone https://ssh.gitlab.freedesktop.org/mesa/mesa.git $MESA_ROOT_DIR
+    git clone https://gitlab.freedesktop.org/mesa/mesa.git $MESA_ROOT_DIR
     cd $MESA_ROOT_DIR
     git remote rename origin upstream
-    git remote add origin git@gitlab.freedesktop.org:marysaka/mesa.git
-    git remote add panfrost https://ssh.gitlab.freedesktop.org/panfrost/mesa.git
-    git remote add asahi https://ssh.gitlab.freedesktop.org/asahi/mesa.git
-    git remote add gfxstrand https://ssh.gitlab.freedesktop.org/gfxstrand/mesa.git
+    git remote add origin git@ssh.gitlab.freedesktop.org:marysaka/mesa.git
+    git remote add panfrost https://gitlab.freedesktop.org/panfrost/mesa.git
+    git remote add asahi https://gitlab.freedesktop.org/asahi/mesa.git
+    git remote add gfxstrand https://gitlab.freedesktop.org/gfxstrand/mesa.git
     git fetch --all
 fi
 
