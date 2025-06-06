@@ -41,9 +41,6 @@ case $api in
         deqp_path=external/openglcts/modules
         deqp_binary=glcts
         deqp_build_path="$DEQP_GL_BUILD_DIR"
-        deqp_surface_type=window
-
-        unset EGL_PLATFORM
         ;;
     vk)
         deqp_path=external/vulkancts/modules/vulkan
